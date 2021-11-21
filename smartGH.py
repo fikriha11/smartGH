@@ -56,7 +56,9 @@ def readDHT():
         print(error)
 
 
-def sensorPrint():
+def ReadSensor():
+    readDHT()
+    readLux()
     print(
         "Temp: {:.1f} F / {:.1f} C    Humidity: {}% Count: {}".format(
             temperature_f, temperature_c, humidity, Count
@@ -68,13 +70,7 @@ def sensorPrint():
 
 def mainLoop():
     while True:
-        sensorPrint()
-        if(time() - dhtTime) > 2:
-            readDHT()
-            dhtTime = time()
-        if(time() - luxTime) > 3:
-            readLux()
-            luxTime = time()
+        ReadSensor()
         if(time() - SoundTime) > 30:
             soundOutput()
             SoundTime = time()

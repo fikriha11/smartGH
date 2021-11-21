@@ -1,6 +1,4 @@
-from math import trunc
 import board
-from readSensor import Sound
 import smbus
 import adafruit_dht
 from gtts import gTTS
@@ -80,3 +78,7 @@ def mainLoop():
         if(time() - SoundTime) > 30:
             soundOutput()
             SoundTime = time()
+
+
+if __name__ == "__main__":
+    mainLoop()

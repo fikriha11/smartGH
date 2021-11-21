@@ -71,13 +71,8 @@ def ReadSensor():
         print(error)
 
 
-def mainLoop():
-    while True:
-        ReadSensor()
-        if(time() - SoundTime) > 30:
-            soundOutput()
-            SoundTime = time()
-
-
-if __name__ == "__main__":
-    mainLoop()
+while True:
+    ReadSensor()
+    if(time() - SoundTime) > 30:
+        soundOutput()
+        SoundTime = time()

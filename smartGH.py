@@ -17,13 +17,11 @@ Count = 0
 
 def soundOutput():
     try:
-        phrase = f"Selamat datang, Kondisi Suhu ruangan sekarang adalah {temperature_c} derajat Celcius, dan Kelembapan Sebesar {humidity} Persen."
-        + f"Untuk Keterangan Cahaya, adalah Sebesar {readLux()} Lumen, Terima Kasih"
-
+        phrase = f"Selamat datang, Kondisi Suhu ruangan sekarang adalah {80} derajat Celcius, dan Kelembapan udara mencapai {38} Persen."
+        phrase1 = f"Untuk Keterangan Cahaya Sebesar {1023} Lumen, Terima Kasih"
         language = 'id'
-        output = gTTS(text=phrase, lang=language, slow=False)
+        output = gTTS(text=phrase + phrase1, lang=language, slow=False)
         output.save('temp.wav')
-
         song = AudioSegment.from_mp3('temp.wav')
         play(song)
         return True

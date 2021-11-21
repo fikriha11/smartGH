@@ -6,13 +6,8 @@ from pydub import AudioSegment
 from pydub.playback import play
 from time import sleep, time
 
-
-# millis
-dhtTime = time()
-luxTime = time()
 SoundTime = time()
 dhtDevice = adafruit_dht.DHT22(board.D25, use_pulseio=False)
-Count = 0
 
 
 def soundOutput():

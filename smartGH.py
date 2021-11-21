@@ -11,7 +11,7 @@ from time import sleep, time
 dhtTime = time()
 luxTime = time()
 SoundTime = time()
-dhtDevice = adafruit_dht.DHT22(board.D23, use_pulseio=False)
+dhtDevice = adafruit_dht.DHT22(board.D25, use_pulseio=False)
 Count = 0
 
 
@@ -57,15 +57,18 @@ def readDHT():
 
 
 def ReadSensor():
-    readDHT()
-    readLux()
-    print(
-        "Temp: {:.1f} F / {:.1f} C    Humidity: {}% Count: {}".format(
-            temperature_f, temperature_c, humidity, Count
+    try:
+        readDHT()
+        readLux()
+        print(
+            "Temp: {:.1f} F / {:.1f} C    Humidity: {}% Count: {}".format(
+                temperature_f, temperature_c, humidity, Count
+            )
         )
-    )
-    print(f"Lux Meter : {lux} lux")
-    return True
+        print(f"Lux Meter : {lux} lux")
+        return True
+    except Exception as error:
+        print(error)
 
 
 def mainLoop():

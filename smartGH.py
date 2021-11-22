@@ -60,11 +60,11 @@ def realtime():
         'humid': int(humidity),
         'image': Image
     }).encode('ascii')
-    try:
-        send_image = urllib.request.urlopen(url_baru, data=files)
-        print(send_image.read())
-    except:
-        print("post image bermasalah!")
+    # try:
+    #     send_image = urllib.request.urlopen(url_baru, data=files)
+    #     print(send_image.read())
+    # except:
+    #     print("post image bermasalah!")
 
 
 def readLux():

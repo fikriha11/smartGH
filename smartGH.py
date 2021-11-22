@@ -11,7 +11,7 @@ def readLux():
         sleep(0.5)
         data = bus.read_i2c_block_data(0x39, 0x0C | 0x80, 2)
         lux = data[1] * 256 + data[0]
-        return True
+        print("Lux Meter: {} Lumen".format(lux))
     except Exception as error:
         print("Lux data error")
 

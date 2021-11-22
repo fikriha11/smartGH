@@ -18,12 +18,12 @@ from datetime import datetime as dt
 from time import time, sleep
 
 
-#url_suhu = "https://gh1.rumahkuhidroponik.com/post_suhu.php"
-#url_image = "https://gh1.rumahkuhidroponik.com/post_image.php"
-#url_realtime = "https://rumahkuhidroponik.com/API/sensor/update-device3/"
+# url_suhu = "https://gh1.rumahkuhidroponik.com/post_suhu.php"
+# url_image = "https://gh1.rumahkuhidroponik.com/post_image.php"
+# url_realtime = "https://rumahkuhidroponik.com/API/sensor/update-device3/"
 url_baru = "https://smartghsip.belajarobot.com/sensor/insert/1"
-#url_lux =  "https://rumahkuhidroponik.com/API/sensor/updatse-device1/"
-#url_lux = "https://gh1.rumahkuhidroponik.com/post_ppm.php"
+# url_lux =  "https://rumahkuhidroponik.com/API/sensor/updatse-device1/"
+# url_lux = "https://gh1.rumahkuhidroponik.com/post_ppm.php"
 api_key = "a1ffqsVcx45IuG"
 
 
@@ -50,7 +50,7 @@ def realtime():
         Image = base64.b64encode(img_file.read())
 
     headers = {}
-    #headers['Content-Type'] = 'application/json'
+    # headers['Content-Type'] = 'application/json'
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
     files = urllib.parse.urlencode({
         # 'api':api_key,
@@ -122,8 +122,8 @@ def mainloop():
 while True:
     response = os.system("ping -c3 " + hostname)
     print("Response: {}".format(response))
-    # if response == 0:
-    #     # maincode()
-    #     mainloop()
-    # if response != 0:
-    #     print("Device not connected to Internet")
+    if response == 0:
+        # maincode()
+        mainloop()
+    if response != 0:
+        print("Device not connected to Internet")

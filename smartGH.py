@@ -121,8 +121,9 @@ def mainloop():
 
 while True:
     response = os.system("ping -c3 " + hostname)
-    if response == 0:
-        # maincode()
-        mainloop()
-    if response != 0:
-        print("Device not connected to Internet")
+    print("Response: {}".format(response))
+    # if response == 0:
+    #     # maincode()
+    #     mainloop()
+    # if response != 0:
+    #     print("Device not connected to Internet")

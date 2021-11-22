@@ -38,3 +38,8 @@ def readSHT():
 
     except:
         print("SHT error")
+
+
+while True:
+    readLux()
+    readSHT()

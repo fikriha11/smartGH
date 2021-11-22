@@ -37,12 +37,12 @@ datenow = dt.now().strftime("%Y-%m-%d")
 
 
 def realtime():
-    # camera.resolution = (320, 240)
-    # camera.rotation = 180
-    # camera.start_preview()
+    camera.resolution = (320, 240)
+    camera.rotation = 180
+    camera.start_preview()
     time.sleep(0.5)
-    # camera.capture('example.jpg')
-    # camera.stop_preview()
+    camera.capture('example.jpg')
+    camera.stop_preview()
     readSHT()
     readLux()
     with open("example.jpg", "rb") as img_file:

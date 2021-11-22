@@ -24,3 +24,7 @@ def readSHT():
 
     except:
         print("SHT error")
+
+
+while True:
+    readSHT()

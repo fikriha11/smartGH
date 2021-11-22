@@ -31,7 +31,7 @@ jam = 0
 flag = 0
 flag1 = 0
 
-# camera = picamera.PiCamera()
+camera = picamera.PiCamera()
 hostname = "8.8.8.8"
 datenow = dt.now().strftime("%Y-%m-%d")
 

@@ -31,18 +31,18 @@ jam = 0
 flag = 0
 flag1 = 0
 
-camera = picamera.PiCamera()
+# camera = picamera.PiCamera()
 hostname = "8.8.8.8"
 datenow = dt.now().strftime("%Y-%m-%d")
 
 
 def realtime():
-    camera.resolution = (320, 240)
-    camera.rotation = 180
-    camera.start_preview()
+    # camera.resolution = (320, 240)
+    # camera.rotation = 180
+    # camera.start_preview()
     time.sleep(0.5)
-    camera.capture('example.jpg')
-    camera.stop_preview()
+    # camera.capture('example.jpg')
+    # camera.stop_preview()
     readSHT()
     readLux()
     with open("example.jpg", "rb") as img_file:
@@ -59,11 +59,11 @@ def realtime():
         'humid': int(humidity),
         'image': Image
     }).encode('ascii')
-    # try:
-    #     send_image = urllib.request.urlopen(url_baru, data=files)
-    #     print(send_image.read())
-    # except:
-    #     print("post image bermasalah!")
+    try:
+        send_image = urllib.request.urlopen(url_baru, data=files)
+        print(send_image.read())
+    except:
+        print("post image bermasalah!")
 
 
 def readLux():

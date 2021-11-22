@@ -76,7 +76,7 @@ def readLux():
         data = bus.read_i2c_block_data(0x39, 0x0C | 0x80, 2)
         lux = data[1] * 256 + data[0]
 
-        # print("Lux Meter: {} Lumen".format(lux))
+        print("Lux Meter: {} Lumen".format(lux))
 
     except Exception as error:
         print("Lux data error")
@@ -98,9 +98,9 @@ def readSHT():
         humidity = 100 * (data[3] * 256 + data[4]) / 65535.0
 
         # Output data to screen
-        # print("Temperature in Celsius is : %.2f C" % cTemp)
-        # print("Temperature in Fahrenheit is : %.2f F" % fTemp)
-        # print("Relative Humidity is : %.2f %%RH" % humidity)
+        print("Temperature in Celsius is : %.2f C" % cTemp)
+        print("Temperature in Fahrenheit is : %.2f F" % fTemp)
+        print("Relative Humidity is : %.2f %%RH" % humidity)
 
     except:
         print("SHT error")
@@ -120,7 +120,6 @@ def mainloop():
 
 while True:
     response = os.system("ping -c3 " + hostname)
-    print("Response: {}".format(response))
     if response == 0:
         # maincode()
         mainloop()

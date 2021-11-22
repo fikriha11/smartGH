@@ -1,27 +1,5 @@
-import board
 import smbus
-import adafruit_dht
-from gtts import gTTS
-from pydub import AudioSegment
-from pydub.playback import play
 from time import sleep, time
-
-SoundTime = time()
-dhtDevice = adafruit_dht.DHT22(board.D25, use_pulseio=False)
-
-
-def soundOutput():
-    try:
-        phrase = f"Selamat datang, Kondisi Suhu ruangan sekarang adalah {round(temperature_c)} derajat Celcius, dan Kelembapan udara mencapai {round(humidity)} Persen."
-        phrase1 = f"Untuk Keterangan Cahaya Sebesar {lux} Lumen, Terima Kasih"
-        language = 'id'
-        output = gTTS(text=phrase + phrase1, lang=language, slow=False)
-        output.save('temp.wav')
-        song = AudioSegment.from_mp3('temp.wav')
-        play(song)
-        return True
-    except Exception as error:
-        print("SoundOutput Error")
 
 
 def readLux():
@@ -38,34 +16,25 @@ def readLux():
         print("Lux data error")
 
 
-def readDHT():
-    global temperature_c, temperature_f, humidity
+def readSHT():
+    global cTemp, fTemp, humidity
     try:
-        temperature_c = dhtDevice.temperature
-        temperature_f = temperature_c * (9 / 5) + 32
-        humidity = dhtDevice.humidity
-        return True
-    except Exception as error:
-        print("Sensor DHT error")
+        # Get I2C bus
+        bus = smbus.SMBus(1)
+        bus.write_i2c_block_data(0x44, 0x2C, [0x06])  # Address 0x44
+        sleep(0.5)
+        data = bus.read_i2c_block_data(0x44, 0x00, 6)
 
+        # Convert the data
+        temp = data[0] * 256 + data[1]
+        cTemp = -45 + (175 * temp / 65535.0)
+        fTemp = -49 + (315 * temp / 65535.0)
+        humidity = 100 * (data[3] * 256 + data[4]) / 65535.0
 
-def ReadSensor():
-    try:
-        readDHT()
-        readLux()
-        print(
-            "Temp: {:.1f} F / {:.1f} C    Humidity: {}%".format(
-                temperature_f, temperature_c, humidity
-            )
-        )
-        print(f"Lux Meter : {lux} lux")
-        return True
-    except Exception as error:
-        print("Print Error")
+        # Output data to screen
+        print("Temperature in Celsius is : %.2f C" % cTemp)
+        print("Temperature in Fahrenheit is : %.2f F" % fTemp)
+        print("Relative Humidity is : %.2f %%RH" % humidity)
 
-
-while True:
-    ReadSensor()
-    if(time() - SoundTime) > 30:
-        soundOutput()
-        SoundTime = time()
+    except:
+        print("SHT error")

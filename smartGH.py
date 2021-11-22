@@ -55,7 +55,7 @@ def ReadSensor():
         readLux()
         print(
             "Temp: {:.1f} F / {:.1f} C    Humidity: {}% Count: {}".format(
-                temperature_f, temperature_c, humidity, Count
+                temperature_f, temperature_c, humidity
             )
         )
         print(f"Lux Meter : {lux} lux")

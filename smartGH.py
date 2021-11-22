@@ -12,7 +12,7 @@ dhtDevice = adafruit_dht.DHT22(board.D25, use_pulseio=False)
 
 def soundOutput():
     try:
-        phrase = f"Selamat datang, Kondisi Suhu ruangan sekarang adalah {temperature_c} derajat Celcius, dan Kelembapan udara mencapai {humidity} Persen."
+        phrase = f"Selamat datang, Kondisi Suhu ruangan sekarang adalah {round(temperature_c)} derajat Celcius, dan Kelembapan udara mencapai {round(humidity)} Persen."
         phrase1 = f"Untuk Keterangan Cahaya Sebesar {lux} Lumen, Terima Kasih"
         language = 'id'
         output = gTTS(text=phrase + phrase1, lang=language, slow=False)

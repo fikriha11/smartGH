@@ -15,7 +15,6 @@ import picamera
 import smbus
 import time
 from datetime import datetime as dt
-from time import time, sleep
 
 
 # url_suhu = "https://gh1.rumahkuhidroponik.com/post_suhu.php"
@@ -73,7 +72,7 @@ def readLux():
         bus = smbus.SMBus(1)
         bus.write_byte_data(0x39, 0x00 | 0x80, 0x03)
         bus.write_byte_data(0x39, 0x01 | 0x80, 0x02)
-        sleep(0.5)
+        time.sleep(0.5)
         data = bus.read_i2c_block_data(0x39, 0x0C | 0x80, 2)
         lux = data[1] * 256 + data[0]
 
@@ -89,7 +88,7 @@ def readSHT():
         # Get I2C bus
         bus = smbus.SMBus(1)
         bus.write_i2c_block_data(0x44, 0x2C, [0x06])  # Address 0x44
-        sleep(0.5)
+        time.sleep(0.5)
         data = bus.read_i2c_block_data(0x44, 0x00, 6)
 
         # Convert the data

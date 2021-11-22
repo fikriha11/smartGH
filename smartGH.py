@@ -21,7 +21,7 @@ def soundOutput():
         play(song)
         return True
     except Exception as error:
-        print(error)
+        print("SoundOutput Error")
 
 
 def readLux():
@@ -35,7 +35,7 @@ def readLux():
         lux = data[1] * 256 + data[0]
         return True
     except Exception as error:
-        print(error)
+        print("Lux data error")
 
 
 def readDHT():
@@ -46,7 +46,7 @@ def readDHT():
         humidity = dhtDevice.humidity
         return True
     except Exception as error:
-        print(error)
+        print("Sensor DHT error")
 
 
 def ReadSensor():
@@ -61,7 +61,7 @@ def ReadSensor():
         print(f"Lux Meter : {lux} lux")
         return True
     except Exception as error:
-        print(error)
+        print("Print Error")
 
 
 while True:

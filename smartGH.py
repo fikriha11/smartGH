@@ -13,57 +13,53 @@ import subprocess
 import logging
 import picamera
 import smbus
+import schedule
 import time
 from datetime import datetime as dt
 
 
-# url_suhu = "https://gh1.rumahkuhidroponik.com/post_suhu.php"
-# url_image = "https://gh1.rumahkuhidroponik.com/post_image.php"
-# url_realtime = "https://rumahkuhidroponik.com/API/sensor/update-device3/"
-url_baru = "https://smartghsip.belajarobot.com/sensor/insert/1"
-# url_lux =  "https://rumahkuhidroponik.com/API/sensor/updatse-device1/"
-# url_lux = "https://gh1.rumahkuhidroponik.com/post_ppm.php"
-api_key = "a1ffqsVcx45IuG"
+url = "https://smartghsip.belajarobot.com/sensor/insert/1"
+# url = "https://smartghsip.belajarobot.com/sensor/insert/2"
 
 
-menit = 0
-jam = 0
-flag = 0
-flag1 = 0
-
-camera = picamera.PiCamera()
 hostname = "8.8.8.8"
-datenow = dt.now().strftime("%Y-%m-%d")
 
 
 def realtime():
-    camera.resolution = (320, 240)
-    camera.rotation = 180
-    camera.start_preview()
-    time.sleep(0.5)
-    camera.capture('example.jpg')
-    camera.stop_preview()
-    readSHT()
     readLux()
+    readSHT()
+    takePicture()
     with open("example.jpg", "rb") as img_file:
         Image = base64.b64encode(img_file.read())
 
     headers = {}
-    # headers['Content-Type'] = 'application/json'
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
     files = urllib.parse.urlencode({
-        # 'api':api_key,
-        # 'id':'0001',
         'lumen': int(lux),
         'temp': int(cTemp),
         'humid': int(humidity),
         'image': Image
     }).encode('ascii')
     try:
-        send_image = urllib.request.urlopen(url_baru, data=files)
+        send_image = urllib.request.urlopen(url, data=files)
         print(send_image.read())
     except:
         print("post image bermasalah!")
+
+
+def takePicture():
+    try:
+        camera = picamera.PiCamera()
+        time.sleep(0.5)
+        camera.resolution = (320, 240)
+        camera.rotation = 180
+        camera.start_preview()
+        time.sleep(0.5)
+        camera.capture('example.jpg')
+        camera.stop_preview()
+        camera.close()
+    except:
+        print("Camera Error")
 
 
 def readLux():
@@ -106,21 +102,16 @@ def readSHT():
 
 
 def mainloop():
-    global menit
-    global flag1
-    if menit != dt.now().minute:
-        flag1 += 1
-        if flag1 == 2:
-            realtime()
-        if flag1 > 2:
-            flag1 = 0
-        menit = dt.now().minute
+    schedule.run_pending()
+    time.sleep(1)
 
+
+# Inisialisasi
+schedule.every(3).minutes.do(realtime)
 
 while True:
     response = os.system("ping -c3 " + hostname)
     if response == 0:
-        # maincode()
         mainloop()
-    if response != 0:
+    else:
         print("Device not connected to Internet")
